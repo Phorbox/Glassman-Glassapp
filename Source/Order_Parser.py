@@ -1,20 +1,36 @@
 import re
 import Regex
 
+
+def Make_Job(Facility, Order_Number):
+    Order_File = Open_Order(Facility, Order_Number)
+    Structo = File_To_Structure(Order_File)
+    Write_Job(Facility, Order_Number,Structo)
+    Order_File.close()
+
+def Write_Job(Facility, Order_Number,Structo):
+    
+    pass
+
+def Open_File(Facility, Order_Number,Type):
+    Order_Number = Order_Number_To_String(Order_Number)
+    File_Path = "{}\{}\{}_{}.txt".format(Type,Facility,Facility,Order_Number)
+    return open(File_Path,"r")
+
 def Open_Order(Facility, Order_Number):
-    Order_Number = str(Order_Number).zfill(6)
+    Order_Number = Order_Number_To_String(Order_Number)
     File_Path = "Orders\{}\{}_{}.txt".format(Facility,Facility,Order_Number)
     return open(File_Path,"r")
+
+def Order_Number_To_String(Order_Number):
+    return str(Order_Number).zfill(6)
 
 def File_To_Structure(File):
     Structure = []
     for Each_Line in File:
         Temp_Line = list(Part_Line(Each_Line.lower()))
-        Structure.append(Temp_Line)
-        
+        Structure.append(Temp_Line)   
     print(Structure)
-
-        
 
 def Part_Line(Line):
     Truck_Number = Find_ID_Number(Line)
@@ -89,5 +105,5 @@ def Apply_Regex(Regexer,Line):
 
 
 thing = Open_Order("SanAngelo",1)
-File_To_Structure(thing)
+Printer_Structure = File_To_Structure(thing)
 thing.close()
