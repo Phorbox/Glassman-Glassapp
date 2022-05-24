@@ -12,15 +12,13 @@ def Write_Job(Facility, Order_Number,Structo):
     
     pass
 
-def Open_File(Facility, Order_Number,Type):
+def Open_File(Facility, Order_Number, Type):
     Order_Number = Order_Number_To_String(Order_Number)
     File_Path = "{}\{}\{}_{}.txt".format(Type,Facility,Facility,Order_Number)
     return open(File_Path,"r")
 
 def Open_Order(Facility, Order_Number):
-    Order_Number = Order_Number_To_String(Order_Number)
-    File_Path = "Orders\{}\{}_{}.txt".format(Facility,Facility,Order_Number)
-    return open(File_Path,"r")
+    return Open_File(Facility,Order_Number,"Orders")
 
 def Order_Number_To_String(Order_Number):
     return str(Order_Number).zfill(6)
@@ -50,13 +48,14 @@ def Find_ID_Number(Line):
 def Regex_Success(temp):
     return temp != None
 
+
 def Find_Side(Line):
     if Regex_Success(Left_Side(Line)):
         return "Left"
     if Regex_Success(Right_Side(Line)):
         return "Right"
     if Regex_Success(Both_Side(Line)):
-        return "both"
+        return "Both"
     return -1
 
 def Find_Glass(Line):
@@ -74,6 +73,7 @@ def Find_Installation(Line):
     if Regex_Success(Rubber_Style(Line)):
         return "Rubber"
     return -1
+                      
 
 def Bonded_Style(Line):
     return Apply_Regex(Regex.BONDED,Line)
@@ -98,6 +98,7 @@ def Right_Side(Line):
 
 def Both_Side(Line):
     return Apply_Regex(Regex.BOTH,Line)    
+
 
 def Apply_Regex(Regexer,Line):
     Temp = re.search(Regexer, Line)
