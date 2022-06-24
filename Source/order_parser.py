@@ -1,6 +1,8 @@
 import re
-import regex
+from enum import Enum
 from pathlib import Path
+
+import regex
 
 
 # def make_job(facility, order_number):
@@ -13,15 +15,18 @@ from pathlib import Path
 # def write_job(facility, order_number, structo):
 #     pass
 
+class FileType(Enum):
+    ORDER = 'Orders'
+
 
 def open_file(facility, order_number, file_type):
     num = order_number_to_string(order_number)
-    file_folder = Path(f"../{file_type}/{facility}/{facility}_{num}.txt")
+    file_folder = Path(f"../{file_type.value}/{facility}/{facility}_{num}.txt")
     return open(file_folder, "r")
 
 
 def open_order(facility, order_number):
-    return open_file(facility, order_number, "Orders")
+    return open_file(facility, order_number, FileType.ORDER)
 
 
 def order_number_to_string(order_number):
